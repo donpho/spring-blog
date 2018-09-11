@@ -8,10 +8,10 @@
 <body>
 <nav th:replace="partials :: navbar"></nav>
 
-<form th:action="'/posts/save'" th:method="post" th:object="${post}">
-    <label for="">Title</label>
+<form th:action="'/posts/create'" th:method="POST" th:object="${post}">
+    Title
     <input type="text" th:field="*{title}" />
-    <label for="">Description</label>
+    Description
     <input type="text" th:field="*{body}" />
     <button class="btn btn-primary">Submit</button>
 </form>

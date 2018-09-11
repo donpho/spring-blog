@@ -1,12 +1,10 @@
-package com.blog.blog;
+package com.blog.blog.Controllers;
 
+import com.blog.blog.models.Post;
 import com.blog.blog.services.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class PostController {
@@ -16,9 +14,6 @@ public class PostController {
     //List<Post> posts = new ArrayList<>();
 
     public PostController(PostService postService){
-//        posts.add(new Post("IA", "English CeVio just came out"));
-//        posts.add(new Post("ONE", "English CeVio just came out"));
-
         this.postService = postService;
     }
 
@@ -41,9 +36,16 @@ public class PostController {
         return "posts/create";
     }
 
-    @PostMapping("/posts/save")
+    @PostMapping("/posts/create")
     public String newPost(@ModelAttribute Post post){
         postService.save(post);
+        System.out.println("Post created");
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id){
+        postService.delete(id);
         return "redirect:/posts";
     }
 
