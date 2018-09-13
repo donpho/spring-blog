@@ -1,5 +1,6 @@
 package com.blog.blog.Controllers;
 
+import com.blog.blog.Repository.UserRepository;
 import com.blog.blog.models.Post;
 import com.blog.blog.services.PostService;
 import org.springframework.stereotype.Controller;
@@ -10,11 +11,13 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
 
     private final PostService postService;
+    UserRepository userRepository;
 
     //List<Post> posts = new ArrayList<>();
 
-    public PostController(PostService postService){
+    public PostController(PostService postService, UserRepository userRepository){
         this.postService = postService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/posts")
@@ -38,8 +41,8 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String newPost(@ModelAttribute Post post){
+        post.setUser(userRepository.findOne(1L));
         postService.save(post);
-        System.out.println("Post created");
         return "redirect:/posts";
     }
 

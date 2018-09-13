@@ -1,14 +1,15 @@
 package com.blog.blog.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post implements Serializable {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
@@ -16,12 +17,23 @@ public class Post {
     @Column(nullable = false)
     private String body;
 
+    @ManyToOne
+    private User user;
+
     public Post(){
     }
 
-    public Post(String title, String body) {
+    public Post(String title, String body, User user) {
         this.title = title;
         this.body = body;
+        this.user = user;
+    }
+
+    public Post(long id,String title, String body, User user) {
+        this.title = title;
+        this.body = body;
+        this.user = user;
+        this.id = id;
     }
 
     public String getTitle() {
@@ -46,5 +58,13 @@ public class Post {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
