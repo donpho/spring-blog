@@ -12,11 +12,13 @@ public class User implements Serializable {
     @GeneratedValue
     private long id;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
+    @Column(unique = true)
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
@@ -37,6 +39,13 @@ public class User implements Serializable {
         this.email = email;
         this.posts = posts;
         this.id = id;
+    }
+
+    public User(User copy){
+        id = copy.id;
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
     }
 
     public long getId() {
